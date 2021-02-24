@@ -1,1 +1,1 @@
-Methods for data retreival
+# Abstract methods for data retrieval
