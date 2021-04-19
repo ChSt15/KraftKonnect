@@ -1,6 +1,6 @@
 import subprocess
 from src.DataManagement.Database.Connection import Connection
-from src.DataManagement.Database.IO.DataIO import DataIO
+from src.DataManagement.IO.DataIO import DataIO
 import subprocess
 
 class Collector:
@@ -11,8 +11,4 @@ class Collector:
         self.collectionCode = self.getCode()
 
     def writeData(self, data):
-        self.dataIO.write(data)
-
-    def execute(self):
-        sp = subprocess.Popen('test.py')
-        for data in iter(sp.)
+        self.dataIO.Insert(data)

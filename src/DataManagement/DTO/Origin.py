@@ -1,7 +1,7 @@
 from src.DataManagement.Database.Connection import Connection
 
 
-class Source:
+class Origin:
     def __init__(self, id=None, title=None, code=None):
         self.id = id
         self.code = code
