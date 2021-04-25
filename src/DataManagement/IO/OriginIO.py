@@ -26,4 +26,23 @@ class OriginIO:
     def getHighestID(self):
         cur = self.db.cursor()
         cur.execute('SELECT id FROM origin ORDER BY id DESC LIMIT 1')
-        return cur.fetchone()[0]
+        res = cur.fetchone()
+        if res is None:
+            return 0
+        else:
+            return res[0]
+    
+    def insert(self, origin: Origin):
+        cur = self.db.cursor()
+        query = 'INSERT INTO origin VALUES(?, ?, ?)'
+        cur.execute(query, origin.toTupel())
+        self.db.connection.commit()
+
+    def getNextId(self):
+        return self.getHighestID()+1
+
+    def deleteById(self, id):
+        cur = self.db.cursor()
+        query = 'DELETE FROM origin WHERE id = ?'
+        cur.execute(query, (id, ))
+        self.db.connection.commit()

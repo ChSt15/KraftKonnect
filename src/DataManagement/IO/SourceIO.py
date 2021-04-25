@@ -21,3 +21,9 @@ class SourceIO:
 
     def getAll(self):
         return self.db.getAll(Source)
+
+    def deleteByOrigin(self, id):
+        cur = self.db.cursor()
+        query = 'DELETE FROM source WHERE origin = ?'
+        cur.execute(query, (id,))
+        self.db.connection.commit()

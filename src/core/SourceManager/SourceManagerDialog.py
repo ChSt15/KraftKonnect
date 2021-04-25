@@ -33,6 +33,9 @@ class SourceManagerDialog(QDialog):
 
         # Create button box
         self.buttonBox = QHBoxLayout()
+        delButton = QPushButton('Delete')
+        delButton.clicked.connect(self.deleteOrigin)
+        self.buttonBox.addWidget(delButton)
         self.newOriginBtn = QPushButton('New Origin')
         self.newOriginBtn.clicked.connect(self.newOriginClicked)
         self.buttonBox.addWidget(self.newOriginBtn)
@@ -46,6 +49,8 @@ class SourceManagerDialog(QDialog):
         self.fetchOrigin()
         self.originList.itemClicked.connect(self.originClicked)
 
+        self.resetLists()
+
     def fetchOrigin(self):
         self.origins = self.originIo.getAll()
         for origin in self.origins:
@@ -55,12 +60,27 @@ class SourceManagerDialog(QDialog):
         self.setMinimumSize(640, 480)
 
     def originClicked(self, item):
-        self.sourceList.clear()
-        index = self.originList.selectedIndexes()[0].row()
-        sources = self.sourceIo.getByOrigin(self.origins[index].id)
-        for source in sources:
-            self.sourceList.addItem(source.toString())
+        if len(self.origins) != 0:
+            self.sourceList.clear()
+            index = self.originList.selectedIndexes()[0].row()
+            sources = self.sourceIo.getByOrigin(self.origins[index].id)
+            for source in sources:
+                self.sourceList.addItem(source.toString())
 
     def newOriginClicked(self):
         nOD = NewOriginDialog()
         nOD.exec_()
+        self.resetLists()
+
+    def deleteOrigin(self):
+        id = self.origins[self.originList.selectedIndexes()[0].row()].id
+        self.originIo.deleteById(id)
+        self.sourceIo.deleteByOrigin(id)
+        self.resetLists()
+
+    def resetLists(self):
+        self.originList.clear()
+        self.sourceList.clear()
+        self.fetchOrigin()
+        self.originList.setCurrentRow(0)
+        self.originClicked(0)
