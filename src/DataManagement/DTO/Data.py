@@ -1,5 +1,8 @@
+from time import time_ns
+
+
 class Data:
-    def __init__(self, set=None, source=None, origin=None, data=None, timestamp=None):
+    def __init__(self, set=None, source=None, origin=None, data=None, timestamp=time_ns()):
         self.set = set
         self.source = source
         self.origin = origin

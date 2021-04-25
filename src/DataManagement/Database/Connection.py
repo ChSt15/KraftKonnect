@@ -11,10 +11,10 @@ class Connection:
         # except:
         #    raise Exception(f'[ERROR] Table {self.table} not found.')
 
-    def insert(self, data):
+    def insert(self, *data):
         cur = self.cursor()
         query = 'INSERT INTO ? VALUES(?)'
-        cur.execute(query, (self.table, data.toTupel()))
+        cur.execute(query, (self.table, data))
         self.connection.commit()
 
     def cursor(self):
