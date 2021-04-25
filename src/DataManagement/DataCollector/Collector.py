@@ -20,10 +20,10 @@ class Collector:
         self.nextSetId = -1
         self.process = multiprocessing.Process(target=script.run, args=(self.writeData,))
 
-    # Iterate over received data tuple
+    # Iterate over received data params
     # elems may be value or 2-tuple
     # elem: add timestamp
-    # tuple: first val is data, snd is tuple
+    # tuple: first val is data, snd is timestamp
     def writeData(self, *data):
         for source, d in enumerate(data, start=1):
             if type(d) is tuple:
