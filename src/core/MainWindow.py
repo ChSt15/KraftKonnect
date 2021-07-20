@@ -1,10 +1,8 @@
-from PyQt5.QtWidgets import QMainWindow, QAction, QDockWidget, QWidget
+from PyQt5.QtWidgets import QMainWindow, QAction, QWidget
 from PyQt5.QtCore import Qt
-from PyQt5 import uic
 from src.widgets.BasicPlot.BasicPlot import BasicPlot
-from src.core.WidgetContainer.Container import Container
+from src.core.WidgetContainer import Container
 from src.core.SourceManager.SourceManagerDialog import SourceManagerDialog
-from src.core.SourceManager.SourceSelectionDialog import SourceSelectionDialog
 from src.DataManagement.IO.OriginIO import OriginIO
 from src.DataManagement.IO.SetIO import SetIO
 from src.DataManagement.DataCollector.Collector import Collector

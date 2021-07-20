@@ -18,16 +18,9 @@ class SetIO:
         cur.execute(query, set.toTupel())
         self.db.connection.commit()
 
-    def getLatestSet(self):
+    def get_next_set_id(self):
         cur = self.db.cursor()
-        query = 'SELECT id FROM sets ORDER BY id DESC LIMIT 1'
+        query = 'SELECT set_id FROM sets ORDER BY set_id DESC LIMIT 1'
         cur.execute(query)
         res = cur.fetchone()
         return res[0]
-
-    def getLatest(self):
-        cur = self.db.cursor()
-        query = 'SELECT * FROM sets ORDER BY id DESC LIMIT 1'
-        cur.execute(query)
-        res = cur.fetchone()
-        return Set(*res)

@@ -1,0 +1,1 @@
+# After program launch check if DTO classes changed. If so then update schemas
