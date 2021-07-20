@@ -8,21 +8,21 @@ class BasicPlot(PlotWidget):
 
     requiredSources = ['x-Axis']
     numberOfSources = len(requiredSources)
-
+    xi = 0
     def __init__(self):
         super(BasicPlot, self).__init__()
         self.maxHistory = 30
-        # TODO: Fix no initial graph shown
-        self.x = [0 for i in range(self.maxHistory)]
-        self.y = [0 for i in range(self.maxHistory)]
-        self.plotRef = self.plot(self.x, self.y)
-        self.setAntialiasing(True)
+        self.x = []
+        self.y = []
+        self.plot(x=self.x, y=self.y, clear=True)
 
-    # Redraw plot. data is a list with tuples for each source and each contains data and timestamp
+    # Adds Data-points to plot. data must contain tuples with timestamp (x) and value (y).
     def update(self, data):
-        self.x = self.x[1:]
-        # TODO: Real time
-        self.x.append(self.x[-1]+1)
-        self.y = self.y[1:]
-        self.y.append(data[0][0])
-        self.plotRef.setData(self.x, self.y)
+        # for d in data:
+        #     self.x.append(d[0])
+        #     self.y.append(d[1])
+        self.x.append(self.xi)
+        self.xi += 1
+        self.y.append(random())
+        self.plot(self.x, self.y, clear=True)
+

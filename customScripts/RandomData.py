@@ -1,9 +1,11 @@
+import time
 from time import sleep
 from random import random
 
-values = ['Random Value']
+provides = ["RandomValueSource1", "RandomValueSource2"]
+
 
 def run(sendFunc):
     while True:
-        sendFunc(random(), random())
+        sendFunc((time.time_ns(),random()))
         sleep(0.1)

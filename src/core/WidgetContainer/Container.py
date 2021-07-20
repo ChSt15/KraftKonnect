@@ -21,12 +21,13 @@ class Container(QDockWidget):
 
         # Get sources for data
         sSD.exec_()
-        self.sources = sSD.sources
+        self.sources = sSD.selectedSources
 
         # Load widget and start
         self.setWidget(widget)
         self.setFloating(True)
         self.updateInterval = updateInterval
+        self.start()
 
     # Start continous widget updates
     def start(self):
@@ -37,6 +38,7 @@ class Container(QDockWidget):
 
     # Update widget once
     def updateWidget(self):
+        # TODO fetch only latest
         data = [self.dataIO.getDataBySourceAndSet(source, self.currentSetId) for source in self.sources]
         dataAndTimestamps = [(dat.data, dat.timestamp) for dat in data]
         self.widget.update(dataAndTimestamps)

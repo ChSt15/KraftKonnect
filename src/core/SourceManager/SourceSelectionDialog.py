@@ -10,10 +10,11 @@ class SourceSelectionDialog(QDialog):
     def __init__(self, requiredSources):
         super(SourceSelectionDialog, self).__init__()
 
+        # Sources usable for widget data
         self.availableSources = SourceIO().getAll()
-        self.availableSourcesStrings = [s.toOriginNameRepr() for s in self.availableSources]
+        # Sources needed for widget
         self.requiredSources = requiredSources
-        self.sources = [self.availableSources[0] for _ in range(len(self.requiredSources))]
+        self.selectedSources = [None for _ in requiredSources]
 
         self.configureLayout()
 
@@ -36,16 +37,19 @@ class SourceSelectionDialog(QDialog):
         layout = QHBoxLayout()
         label = QLabel(source)
         comboBox = QComboBox()
-        comboBox.addItems(self.availableSourcesStrings)
+        # TODO Remove Empty ("") after first selection
+        comboBox.addItems([""] + [s.toOriginNameRepr() for s in self.availableSources])
 
-        comboBox.currentIndexChanged.connect(lambda i: self.setSource(i, index))
+        comboBox.currentIndexChanged.connect(lambda i: self.setSource(i-1, index))
         layout.addWidget(label)
         layout.addWidget(comboBox)
 
         return layout
 
     def finishButtonClicked(self):
-        self.accept()
+        if not len(self.selectedSources) != len(self.requiredSources):
+            self.accept()
+        # TODO Add Hint that says something like "U have to specify more sources."
 
     def setSource(self, comboBoxSelectionIndex, widgetSourceIndex):
-        self.sources[widgetSourceIndex] = self.availableSources[comboBoxSelectionIndex]
+        self.selectedSources[widgetSourceIndex] = self.availableSources[comboBoxSelectionIndex]

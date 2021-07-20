@@ -28,7 +28,7 @@ class Collector:
         for source, d in enumerate(data, start=1):
             if type(d) is tuple:
                 # data contains time
-                dObj = Data(self.setId, source, self.origin.id, d[0], d[1])
+                dObj = Data(self.setId, source, self.origin.id, d[1], d[0])
                 self.dataIO.write(dObj)
             else:
                 # Add time if not in data
