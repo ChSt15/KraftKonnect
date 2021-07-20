@@ -3,8 +3,10 @@ from dataclasses import dataclass
 
 @dataclass
 class Source:
-    __slots__ = ['id', 'description', 'name', 'script']
+    __slots__ = ['id', 'name', 'description', 'script']
     id: int
-    description: str
     name: str
+    description: str
+    script: str
+
 

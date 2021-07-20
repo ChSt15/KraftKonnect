@@ -4,9 +4,10 @@ from time import time_ns
 
 @dataclass
 class Data:
-    __slots__ = ['id', 'set_id', 'source_id', 'value', 'timestamp']
+    __slots__ = ['id', 'source_id', 'set_id', 'timestamp', 'value']
     id: int
-    set_id: int
     source_id: int
-    value: str
+    set_id: int
     timestamp: int
+    value: str
+
