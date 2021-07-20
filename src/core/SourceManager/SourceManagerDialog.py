@@ -1,6 +1,5 @@
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QListWidget, QTableWidget, QPushButton, QLabel, QSplitter
 from PyQt5.QtCore import Qt
-from src.DataManagement.IO.OriginIO import OriginIO
 from src.DataManagement.IO.DataIO import DataIO
 from src.DataManagement.IO.SourceIO import SourceIO
 from src.core.SourceManager.NewOriginDialog import NewOriginDialog

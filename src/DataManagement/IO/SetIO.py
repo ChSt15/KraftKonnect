@@ -1,6 +1,6 @@
 from src.DataManagement.Database.Connection import Connection
 from src.DataManagement.DTO.Set import Set
-from IOErrors import SqlInsertError, SqlSelectError
+from src.DataManagement.IO.IOErrors import SqlInsertError, SqlSelectError
 
 class SetIO:
     def __init__(self):

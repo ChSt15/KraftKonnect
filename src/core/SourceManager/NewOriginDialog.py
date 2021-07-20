@@ -1,46 +1,44 @@
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QComboBox, QLabel, QFileDialog, QPushButton, QLineEdit
 from PyQt5.QtGui import QIcon
 from src.core.SourceManager.OriginTypes import OriginTypes
-from src.DataManagement.IO.OriginIO import OriginIO
-from src.DataManagement.DTO.Origin import Origin
 
 class NewOriginDialog(QDialog):
     def __init__(self):
         super(NewOriginDialog, self).__init__()
 
-        self.nextId = OriginIO().getHighestID()+1
-        self.originIO = OriginIO()
-        self.id = self.originIO.getNextId()
-        self.origin = Origin(id=self.id)
-
-        # Layout
-        self.layout = QVBoxLayout()
-        
-        # Name
-        nameLayout = QHBoxLayout()
-        label = QLabel('Name')
-        nameLayout.addWidget(label)
-        self.nameTextEdit = QLineEdit()
-        nameLayout.addWidget(self.nameTextEdit)
-        self.layout.addLayout(nameLayout)
-
-        # Type selection
-        typeSelectionLayout = QHBoxLayout()
-        typeLabel = QLabel('Type')
-        self.typeComboBox = QComboBox()
-        for t in OriginTypes:
-            self.typeComboBox.addItem(t.name)
-        typeSelectionLayout.addWidget(typeLabel)
-        typeSelectionLayout.addWidget(self.typeComboBox)
-        self.layout.addLayout(typeSelectionLayout)
-        self.configLayout = QVBoxLayout()
-        self.typeComboBox.currentIndexChanged.connect(self.setConfigLayout)
-        self.typeComboBox.setCurrentIndex(0)
-
-        # Script selector
-        # TODO: Dynamic layout by type
-        self.layout.addLayout(self.getPythonLayout())
-        self.setLayout(self.layout)
+        # self.nextId = OriginIO().getHighestID()+1
+        # self.originIO = OriginIO()
+        # self.id = self.originIO.getNextId()
+        # self.origin = Origin(id=self.id)
+        #
+        # # Layout
+        # self.layout = QVBoxLayout()
+        #
+        # # Name
+        # nameLayout = QHBoxLayout()
+        # label = QLabel('Name')
+        # nameLayout.addWidget(label)
+        # self.nameTextEdit = QLineEdit()
+        # nameLayout.addWidget(self.nameTextEdit)
+        # self.layout.addLayout(nameLayout)
+        #
+        # # Type selection
+        # typeSelectionLayout = QHBoxLayout()
+        # typeLabel = QLabel('Type')
+        # self.typeComboBox = QComboBox()
+        # for t in OriginTypes:
+        #     self.typeComboBox.addItem(t.name)
+        # typeSelectionLayout.addWidget(typeLabel)
+        # typeSelectionLayout.addWidget(self.typeComboBox)
+        # self.layout.addLayout(typeSelectionLayout)
+        # self.configLayout = QVBoxLayout()
+        # self.typeComboBox.currentIndexChanged.connect(self.setConfigLayout)
+        # self.typeComboBox.setCurrentIndex(0)
+        #
+        # # Script selector
+        # # TODO: Dynamic layout by type
+        # self.layout.addLayout(self.getPythonLayout())
+        # self.setLayout(self.layout)
 
     def openScriptSelector(self, lable):
         file = QFileDialog.getOpenFileName(self, 'Select script', '.', 'Python file (*.py)')

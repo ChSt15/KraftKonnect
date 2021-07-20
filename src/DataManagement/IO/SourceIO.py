@@ -1,6 +1,6 @@
 from src.DataManagement.Database.Connection import Connection
 from src.DataManagement.DTO.Source import Source
-from IOErrors import SqlInsertError, SqlSelectError
+from src.DataManagement.IO.IOErrors import SqlInsertError, SqlSelectError
 
 
 class SourceIO:

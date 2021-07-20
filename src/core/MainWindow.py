@@ -26,20 +26,20 @@ class CoreWindow(QMainWindow):
     def set_up_menu_bar(self):
         widget_menu = self.menu.addMenu('Widgets')
         add_widget_menu = widget_menu.addMenu('Add')
-        basic_plot_widget_action = QAction('Basic Plot', self)
-        add_widget_menu.addAction(basic_plot_widget_action)
-        basic_plot_widget_action.triggered.connect(self.newBasicPlotWidget)
+        # basic_plot_widget_action = QAction('Basic Plot', self)
+        # add_widget_menu.addAction(basic_plot_widget_action)
+        # basic_plot_widget_action.triggered.connect(self.newBasicPlotWidget)
 
         source_menu = self.menu.addMenu('Data')
         action_manager = QAction('Manager', self)
-        action_manager.triggered.connect(self.launchSourceManager)
+        action_manager.triggered.connect(self.launch_source_manager)
         source_menu.addAction(action_manager)
 
         run_menu = self.menu.addMenu('Run')
         run_start_action = QAction('Start', self)
         run_stop_action = QAction('Stop', self)
-        run_start_action.triggered.connect(self.set_start)
-        run_stop_action.triggered.connect(self.setStop)
+        run_start_action.triggered.connect(self.set_start_recording)
+        run_stop_action.triggered.connect(self.set_stop_recording)
         run_menu.addAction(run_start_action)
         run_menu.addAction(run_stop_action)
 
@@ -67,7 +67,7 @@ class CoreWindow(QMainWindow):
         self.addDockWidget(Qt.BottomDockWidgetArea, container)
 
     # Start data recording, logging, displaying
-    def start_set_recording(self) -> None:
+    def set_start_recording(self) -> None:
         next_set_id = self.setIO.get_next_set_id()
         self.start_container_updates()
         self.current_set = Set(next_set_id, int(time_ns()/1000), None)
@@ -80,7 +80,7 @@ class CoreWindow(QMainWindow):
             self.collectors.append(collector)
             collector.start()
 
-    def stop_set_recording(self) -> None:
+    def set_stop_recording(self) -> None:
         self.stopContainerUpdates()
         self.currentSet.end_time_ms = int(time_ns()/1000)
         while len(self.collectors) > 0:
