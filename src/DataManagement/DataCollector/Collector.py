@@ -15,7 +15,7 @@ class Collector:
 
     def __init__(self, source: Source):
         self.source = source
-        script = importlib.import_module('customScripts.'+self.source.script)
+        script = importlib.import_module('custom.'+self.source.script)
         self.data_io = DataIO()
         self.set_io = SetIO()
         self.set_id = None
