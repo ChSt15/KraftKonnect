@@ -10,35 +10,22 @@ from src.DataManagement.DTO.Data import Data
 from src.DataManagement.IO.SetIO import SetIO
 from time import time_ns
 
+
 class Collector:
 
-    def __init__(self, origin):
-        self.origin = origin
-        script = importlib.import_module('customScripts.'+self.origin.script)
-        self.dataIO = DataIO()
-        self.setIO = SetIO()
-        self.nextSetId = -1
+    def __init__(self, source: Source):
+        self.source = source
+        script = importlib.import_module('customScripts.'+self.source.script)
+        self.data_io = DataIO()
+        self.set_io = SetIO()
+        self.set_id = None
         self.process = multiprocessing.Process(target=script.run, args=(self.writeData,))
 
-    # Iterate over received data params
-    # elems may be value or 2-tuple
-    # elem: add timestamp
-    # tuple: first val is data, snd is timestamp
-    def writeData(self, *data):
-        for source, d in enumerate(data, start=1):
-            if type(d) is tuple:
-                # data contains time
-                dObj = Data(self.setId, source, self.origin.id, d[1], d[0])
-                self.dataIO.write(dObj)
-            else:
-                # Add time if not in data
-                timens = time_ns()
-                dObj = Data(self.setId, source, self.origin.id, d, timens)
-                self.dataIO.write(dObj)
-
+    def write_data(self, key: str, value: str, timestamp: int = None):
+        self.data_io.write(self.set_id, key, value, timestamp if timestamp != None else int(time_ns()/1000))
 
     def start(self):
-        self.setId = self.setIO.getNextSetId()
+        self.set_id = self.set_io.get_next_set_id()
         self.process.start()
 
     def stop(self):
