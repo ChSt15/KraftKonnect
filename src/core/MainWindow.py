@@ -1,6 +1,5 @@
 from PyQt5.QtWidgets import QMainWindow, QAction, QWidget
 from PyQt5.QtCore import Qt
-from src.widgets.BasicPlot.BasicPlot import BasicPlot
 from src.widgets.WidgetContainer import Container
 from src.core.SourceManager.SourceManagerDialog import SourceManagerDialog
 from src.DataManagement.IO.SetIO import SetIO
