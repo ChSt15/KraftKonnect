@@ -17,12 +17,12 @@ class DataIO:
         except Exception:
             raise SqlInsertError(data, 'data')
 
-    def get_all_by_source_after(self, source_id: int, timestamp_ms: int) -> list:
+    def get_all_by_source_and_key_after(self, source_id: int, key: str, timestamp_ms: int) -> list:
         """ Return all values for source after a given timestamp """
         cur = self.db.cursor()
-        query = 'SELECT * FROM "data" WHERE source_id = ? AND "timestamp" > ? ORDER BY timestamp DESC'
+        query = 'SELECT * FROM "data" WHERE source_id = ? AND "key"=? "timestamp" > ? ORDER BY timestamp DESC'
         try:
-            cur.execute(query, (source_id, timestamp_ms))
+            cur.execute(query, (source_id, key, timestamp_ms))
             result = cur.fetchall()
             return result
         except Exception:
