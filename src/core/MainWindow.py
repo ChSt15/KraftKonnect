@@ -6,7 +6,7 @@ from src.DataManagement.IO.SetIO import SetIO
 from src.DataManagement.DataCollector.Collector import Collector
 from time import time_ns
 from src.DataManagement.DTO.Set import Set
-
+import pkgutil
 
 class CoreWindow(QMainWindow):
 
@@ -54,6 +54,8 @@ class CoreWindow(QMainWindow):
         self.showMaximized()
 
     # TODO autmoatically add all widgets in default widgets folder
+    def load_default_widgets(self):
+        a = widgets.
     # # Add new single-x-axis plot from menu bar
     # def newBasicPlotWidget(self) -> None:
     #     basicBlot = BasicPlot()
