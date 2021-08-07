@@ -12,26 +12,20 @@ from src.data_management.database.io.SourceIO import SourceIO
 
 class Container(QDockWidget):
     # TODO: Replay function -> Use set_id and get historic data
-    def __init__(self, widget: QWidget, update_interval: int = 30):
+    def __init__(self, widget: QWidget, sources, update_interval: int = 30):
         super(Container, self).__init__()
 
         # io objects
         self.source_io = SourceIO()
         self.data_io = DataIO()
         self.set_io = SetIO()
+        self.sources = sources
 
         self.last_update = None
         self.timer = QTimer()
         self.widget = widget
         self.next_set_id = self.set_io.get_next_set_id()
         self.required_sources = self.widget.required_sources
-
-        # Choose data-sources
-        source_selection_dialog = SourceSelectionDialog(widget.required_sources)
-
-        # Get sources for data
-        source_selection_dialog.exec_()
-        self.sources = source_selection_dialog.selected_sources
 
         # Load widget and start
         self.setWidget(widget)

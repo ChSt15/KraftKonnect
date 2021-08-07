@@ -16,6 +16,7 @@ class SourceSelectionDialog(QDialog):
 
     def set_up_ui(self):
         uic.loadUi('res/layout/source_selection_dialog.ui', self)
+        self.buttonBox.button(QDialogButtonBox.Ok).setEnabled(False)
         self.buttonBox.button(QDialogButtonBox.Ok).clicked.connect(self.ok)
         self.buttonBox.button(QDialogButtonBox.Cancel).clicked.connect(self.cancel)
         # Add selection
@@ -25,8 +26,8 @@ class SourceSelectionDialog(QDialog):
 
     def ok(self):
         # TODO Add Hint that says something like "U have to specify more sources."
-        # TODO Check if all sources selected
-        self.accept()
+        if all(map(lambda x: x != "None" and x is not None, self.selected_sources)):
+            self.accept()
 
     def cancel(self):
         self.close()
@@ -36,7 +37,7 @@ class SourceSelectionDialog(QDialog):
         label = QLabel(source)
         combo_box = QComboBox()
         # TODO Remove Empty ("") after first selection
-        combo_box.addItems([""] + [s.__repr__() for s in self.available_sources])
+        combo_box.addItems(["None"] + [s.__repr__() for s in self.available_sources])
         combo_box.currentIndexChanged.connect(lambda i: self.set_source(i-1, index))
         layout.addWidget(label)
         layout.addWidget(combo_box)
@@ -44,3 +45,6 @@ class SourceSelectionDialog(QDialog):
 
     def set_source(self, combo_box_selection_index: int, widget_source_index: int) -> None:
         self.selected_sources[widget_source_index] = self.available_sources[combo_box_selection_index]
+        # Enable ok btn if all sources set
+        if all(map(lambda x: x != "None" and x is not None, self.selected_sources)):
+            self.buttonBox.button(QDialogButtonBox.Ok).setEnabled(True)

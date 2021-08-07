@@ -1,6 +1,8 @@
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow, QWidget, QAction
 from PyQt5.QtCore import Qt
+
+from src.Ui.SourceSelectionDialog import SourceSelectionDialog
 from src.widgets.WidgetContainer import Container
 from src.Ui.SourceManagerDialog import SourceManagerDialog
 import pkgutil
@@ -38,10 +40,16 @@ class CoreWindow(QMainWindow):
 
     # Add widget to screen
     def attach_widget(self, cls) -> None:
-        container = Container(cls())
-        self.containers.append(container)
-        self.addDockWidget(Qt.BottomDockWidgetArea, container)
-        pass
+        widget = cls()
+        source_selection_dialog = SourceSelectionDialog(widget.required_sources)
+        source_selection_dialog.exec_()
+        sources = source_selection_dialog.selected_sources
+        # TODO Check if btn was cancel/ok instead of source quality
+        # Check if all sources set, else do noting
+        if all(map(lambda x: x != "None" and x is not None, sources)):
+            container = Container(cls(), sources)
+            self.containers.append(container)
+            self.addDockWidget(Qt.BottomDockWidgetArea, container)
 
     def stop_container_updates(self):
         """ Start every registered container """
