@@ -1,3 +1,6 @@
+import sqlite3
+from sqlite3 import IntegrityError, Error, OperationalError
+
 from src.DataManagement.Database.Connection import Connection
 from src.DataManagement.DTO.Source import Source
 from src.DataManagement.IO.IOErrors import SqlInsertError, SqlSelectError, SqlDeleteError, SqlUpdateError
@@ -32,5 +35,5 @@ class SourceIO:
         try:
             cur.execute(query, (source.name, source.description, source.script, source.id))
             self.db.commit()
-        except Exception:
-            raise SqlUpdateError('source', 'update')
+        except IntegrityError:
+            raise
