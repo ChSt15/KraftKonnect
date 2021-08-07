@@ -1,3 +1,4 @@
+from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow, QAction, QWidget
 from PyQt5.QtCore import Qt
 from src.widgets.WidgetContainer import Container
@@ -14,38 +15,9 @@ class CoreWindow(QMainWindow):
 
     def __init__(self):
         super().__init__()
-
-        self.menu = self.menuBar()
-        self.set_up_menu_bar()
-        self.configure_layout()
-        self.set_io = SetIO()
-        self.current_set = None
+        self.set_up_ui()
         self.sources = []
-        self.collectors = []
         self.containers = []
-
-    def set_up_menu_bar(self):
-        widget_menu = self.menu.addMenu('Widgets')
-        add_widget_menu = widget_menu.addMenu('Add')
-        basic_plot_widget_action = QAction('Basic Plot', self)
-        add_widget_menu.addAction(basic_plot_widget_action)
-        basic_plot_widget_action.triggered.connect(self.newBasicPlotWidget)
-        rotation_widget_action = QAction('Rotation', self)
-        add_widget_menu.addAction(rotation_widget_action)
-        rotation_widget_action.triggered.connect(self.newRotationWidget)
-
-        source_menu = self.menu.addMenu('Data')
-        action_manager = QAction('Manager', self)
-        action_manager.triggered.connect(self.launch_source_manager)
-        source_menu.addAction(action_manager)
-
-        run_menu = self.menu.addMenu('Run')
-        run_start_action = QAction('Start', self)
-        run_stop_action = QAction('Stop', self)
-        run_start_action.triggered.connect(self.set_start_recording)
-        run_stop_action.triggered.connect(self.set_stop_recording)
-        run_menu.addAction(run_start_action)
-        run_menu.addAction(run_stop_action)
 
     # Open manager to delete, rename, config origins and sources
     @staticmethod
@@ -54,9 +26,10 @@ class CoreWindow(QMainWindow):
         sm.exec_()
 
     # Layout specific configs
-    def configure_layout(self) -> None:
-        self.setDockNestingEnabled(True)
+    def set_up_ui(self) -> None:
+        uic.loadUi('res/layout/main_window.ui', self)
         self.showMaximized()
+        a = self.actionManager.triggered.connect(self.launch_source_manager)
 
     # TODO autmoatically add all widgets from default widgets folder
     # def load_default_widgets(self):
@@ -72,6 +45,7 @@ class CoreWindow(QMainWindow):
     def newBasicPlotWidget(self) -> None:
         basicBlot = BasicPlot()
         self.attach_widget(basicBlot)
+
     def newRotationWidget(self) -> None:
         rotationWidget = Rotation()
         self.attach_widget(rotationWidget)
@@ -81,28 +55,6 @@ class CoreWindow(QMainWindow):
         container = Container(widget)
         self.containers.append(container)
         self.addDockWidget(Qt.BottomDockWidgetArea, container)
-
-    # Start data recording, logging, displaying
-    def set_start_recording(self) -> None:
-        next_set_id = self.set_io.get_next_set_id()
-        self.start_container_updates()
-        self.current_set = Set(next_set_id, int(time_ns()/1000), None)
-        for container in self.containers:
-            for source in container.sources:
-                if source not in self.sources:
-                    self.sources.append(source)
-        for source in self.sources:
-            collector = Collector(source)
-            self.collectors.append(collector)
-            collector.start()
-
-    def set_stop_recording(self) -> None:
-        self.stopContainerUpdates()
-        self.currentSet.end_time_ms = int(time_ns()/1000)
-        while len(self.collectors) > 0:
-            collector = self.collectors.pop()
-            collector.stop()
-        self.setIO.write(self.currentSet)
 
     def stop_container_updates(self):
         """ Start every registered container """
