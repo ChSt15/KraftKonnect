@@ -117,7 +117,7 @@
            <item>
             <widget class="QLabel" name="code_path">
              <property name="text">
-              <string>TextLabel</string>
+              <string/>
              </property>
             </widget>
            </item>
