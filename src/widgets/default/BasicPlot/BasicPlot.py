@@ -6,8 +6,8 @@ from typing import Tuple, List
 
 class BasicPlot(PlotWidget):
 
-    requiredSources = ['x-Axis']
-    numberOfSources = len(requiredSources)
+    required_sources = ['x-Axis']
+    number_of_sources = len(required_sources)
     xi = 0
     def __init__(self):
         super(BasicPlot, self).__init__()
@@ -17,7 +17,7 @@ class BasicPlot(PlotWidget):
         self.plot(x=self.x, y=self.y, clear=True)
 
     # Adds Data-points to plot. data must contain tuples with timestamp (x) and value (y).
-    def update(self, data):
+    def update_data(self, data):
         # for d in data:
         #     self.x.append(d[0])
         #     self.y.append(d[1])

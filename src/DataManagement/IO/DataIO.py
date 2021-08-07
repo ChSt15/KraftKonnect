@@ -1,6 +1,6 @@
 from src.DataManagement.Database.Connection import Connection
 from src.DataManagement.DTO.Data import Data
-from src.DataManagement.IO.IOErrors import SqlInsertError, SqlSelectError
+from src.DataManagement.IO.IOErrors import SqlInsertError, SqlSelectError, SqlDeleteError
 
 
 class DataIO:
@@ -16,13 +16,22 @@ class DataIO:
         except Exception:
             raise SqlInsertError(data, 'data')
 
-    def get_all_by_source_and_key_after(self, source_id: int, key: str, timestamp_ms: int) -> list:
+    def get_all_by_source_after(self, source_id: int, timestamp_ms: int) -> list:
         """ Return all values for source after a given timestamp """
         cur = self.db.cursor()
-        query = 'SELECT * FROM "data" WHERE source_id = ? AND "key"=? "timestamp" > ? ORDER BY timestamp DESC'
+        query = 'SELECT * FROM "data" WHERE source_id = ? AND "timestamp" > ? ORDER BY timestamp DESC'
         try:
-            cur.execute(query, (source_id, key, timestamp_ms))
+            cur.execute(query, (source_id, timestamp_ms))
             result = cur.fetchall()
             return result
         except Exception:
             raise SqlSelectError('data', 'get_all_by_source_after', f'{source_id=}, {timestamp_ms=}')
+
+    def delete_all(self, source: int):
+        cur = self.db.cursor()
+        query = 'DELETE FROM "data" WHERE "source_id" = ?'
+        try:
+            cur.execute(query, (source,))
+            self.db.commit()
+        except Exception:
+            raise SqlDeleteError('data', 'delete_all')

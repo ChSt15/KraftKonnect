@@ -6,6 +6,8 @@ from src.DataManagement.IO.SetIO import SetIO
 from src.DataManagement.DataCollector.Collector import Collector
 from time import time_ns
 from src.DataManagement.DTO.Set import Set
+from src.widgets.default.Rotation.Rotation import Rotation
+from src.widgets.default.BasicPlot.BasicPlot import BasicPlot
 import pkgutil
 
 class CoreWindow(QMainWindow):
@@ -25,9 +27,12 @@ class CoreWindow(QMainWindow):
     def set_up_menu_bar(self):
         widget_menu = self.menu.addMenu('Widgets')
         add_widget_menu = widget_menu.addMenu('Add')
-        # basic_plot_widget_action = QAction('Basic Plot', self)
-        # add_widget_menu.addAction(basic_plot_widget_action)
-        # basic_plot_widget_action.triggered.connect(self.newBasicPlotWidget)
+        basic_plot_widget_action = QAction('Basic Plot', self)
+        add_widget_menu.addAction(basic_plot_widget_action)
+        basic_plot_widget_action.triggered.connect(self.newBasicPlotWidget)
+        rotation_widget_action = QAction('Rotation', self)
+        add_widget_menu.addAction(rotation_widget_action)
+        rotation_widget_action.triggered.connect(self.newRotationWidget)
 
         source_menu = self.menu.addMenu('Data')
         action_manager = QAction('Manager', self)
@@ -53,13 +58,23 @@ class CoreWindow(QMainWindow):
         self.setDockNestingEnabled(True)
         self.showMaximized()
 
-    # TODO autmoatically add all widgets in default widgets folder
-    def load_default_widgets(self):
-        a = widgets.
+    # TODO autmoatically add all widgets from default widgets folder
+    # def load_default_widgets(self):
+    #     widget_menu = self.menu.addMenu('Widgets')
+    #     plot = QAction('Basic Plot', self)
+    #     rotation = QAction('Rotation', self)
+    #     plot.triggered.connect(self.newBasicPlotWidget)
+    #     plot.triggered.connect(self.newRotationWidget)
+    #     widget_menu.addAction(plot)
+    #     widget_menu.addAction(rotation)
+
     # # Add new single-x-axis plot from menu bar
-    # def newBasicPlotWidget(self) -> None:
-    #     basicBlot = BasicPlot()
-    #     self.attachWidget(basicBlot)
+    def newBasicPlotWidget(self) -> None:
+        basicBlot = BasicPlot()
+        self.attach_widget(basicBlot)
+    def newRotationWidget(self) -> None:
+        rotationWidget = Rotation()
+        self.attach_widget(rotationWidget)
 
     # Add widget to screen
     def attach_widget(self, widget: QWidget) -> None:
@@ -69,11 +84,11 @@ class CoreWindow(QMainWindow):
 
     # Start data recording, logging, displaying
     def set_start_recording(self) -> None:
-        next_set_id = self.setIO.get_next_set_id()
+        next_set_id = self.set_io.get_next_set_id()
         self.start_container_updates()
         self.current_set = Set(next_set_id, int(time_ns()/1000), None)
         for container in self.containers:
-            for source, _ in container.sources_and_keys:
+            for source in container.sources:
                 if source not in self.sources:
                     self.sources.append(source)
         for source in self.sources:

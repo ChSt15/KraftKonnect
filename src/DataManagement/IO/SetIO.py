@@ -18,7 +18,7 @@ class SetIO:
 
     def get_next_set_id(self):
         cur = self.db.cursor()
-        query = 'SELECT set_id FROM sets ORDER BY set_id DESC LIMIT 1'
+        query = 'SELECT "id" FROM "set" ORDER BY "id" DESC LIMIT 1'
         try:
             cur.execute(query)
             res = cur.fetchone()
