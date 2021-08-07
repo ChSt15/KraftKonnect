@@ -41,7 +41,7 @@
     <property name="title">
      <string>Source</string>
     </property>
-    <addaction name="actionAdd"/>
+    <addaction name="add_source"/>
     <addaction name="actionManager"/>
    </widget>
    <addaction name="menu_widgets"/>
@@ -53,7 +53,7 @@
     <string>Manager</string>
    </property>
   </action>
-  <action name="actionAdd">
+  <action name="add_source">
    <property name="text">
     <string>Add</string>
    </property>

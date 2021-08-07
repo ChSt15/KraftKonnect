@@ -2,6 +2,7 @@ from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow, QWidget, QAction
 from PyQt5.QtCore import Qt
 
+from src.Ui.SourceAddDialog import SourceAddDialog
 from src.Ui.SourceSelectionDialog import SourceSelectionDialog
 from src.widgets.WidgetContainer import Container
 from src.Ui.SourceManagerDialog import SourceManagerDialog
@@ -20,7 +21,7 @@ class CoreWindow(QMainWindow):
 
     # Open manager to delete, rename, config origins and sources
     @staticmethod
-    def launch_source_manager():
+    def launch_source_manager_dialog():
         sm = SourceManagerDialog()
         sm.exec_()
 
@@ -28,7 +29,8 @@ class CoreWindow(QMainWindow):
     def set_up_ui(self) -> None:
         uic.loadUi('res/layout/main_window.ui', self)
         self.showMaximized()
-        self.actionManager.triggered.connect(self.launch_source_manager)
+        self.actionManager.triggered.connect(self.launch_source_manager_dialog)
+        self.add_source.triggered.connect(self.launch_source_add_dialog)
         # Load all default widgets to menu
         for module_finder, name, ispkg in pkgutil.iter_modules(widgets.__path__):
             module = importlib.import_module(f'.{name}.{name[0].upper()+name[1:]}', 'src.widgets.default')
@@ -37,6 +39,10 @@ class CoreWindow(QMainWindow):
             cls = getattr(module, name)
             action.triggered.connect(lambda ac, cls=cls: self.attach_widget(cls))
             self.menu_widgets.addAction(action)
+
+    def launch_source_add_dialog(self):
+        sad = SourceAddDialog()
+        sad.exec_()
 
     # Add widget to screen
     def attach_widget(self, cls) -> None:
