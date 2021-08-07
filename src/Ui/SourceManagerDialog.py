@@ -61,7 +61,7 @@ class SourceManagerDialog(QDialog):
         self.set_up_source_table_view()
 
     def set_up_ui(self):
-        uic.loadUi('res/layout/source_manager_dialog.ui', self)
+        uic.loadUi('res/layout/source_manager_dialog.Ui', self)
         self.buttonBox.button(QDialogButtonBox.Ok).clicked.connect(self.ok)
         self.buttonBox.button(QDialogButtonBox.Discard).clicked.connect(self.discard)
         self.buttonBox.button(QDialogButtonBox.Apply).clicked.connect(self.apply)

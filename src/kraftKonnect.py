@@ -1,4 +1,4 @@
-from src.core.MainWindow import CoreWindow
+from src.Ui.MainWindow import CoreWindow
 from PyQt5 import QtWidgets
 
 

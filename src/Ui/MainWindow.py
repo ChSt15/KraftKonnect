@@ -1,15 +1,11 @@
 from PyQt5 import uic
-from PyQt5.QtWidgets import QMainWindow, QAction, QWidget
+from PyQt5.QtWidgets import QMainWindow, QWidget
 from PyQt5.QtCore import Qt
 from src.widgets.WidgetContainer import Container
-from src.core.SourceManager.SourceManagerDialog import SourceManagerDialog
-from src.DataManagement.IO.SetIO import SetIO
-from src.DataManagement.DataCollector.Collector import Collector
-from time import time_ns
-from src.DataManagement.DTO.Set import Set
-from src.widgets.default.Rotation.Rotation import Rotation
-from src.widgets.default.BasicPlot.BasicPlot import BasicPlot
-import pkgutil
+from src.Ui.SourceManagerDialog import SourceManagerDialog
+from src.widgets.default.rotation.Rotation import Rotation
+from src.widgets.default.plot.Plot import BasicPlot
+
 
 class CoreWindow(QMainWindow):
 
@@ -27,15 +23,15 @@ class CoreWindow(QMainWindow):
 
     # Layout specific configs
     def set_up_ui(self) -> None:
-        uic.loadUi('res/layout/main_window.ui', self)
+        uic.loadUi('res/layout/main_window.Ui', self)
         self.showMaximized()
         a = self.actionManager.triggered.connect(self.launch_source_manager)
 
     # TODO autmoatically add all widgets from default widgets folder
     # def load_default_widgets(self):
-    #     widget_menu = self.menu.addMenu('Widgets')
+    #     widget_menu = self.menu.addMenu('widgets')
     #     plot = QAction('Basic Plot', self)
-    #     rotation = QAction('Rotation', self)
+    #     rotation = QAction('rotation', self)
     #     plot.triggered.connect(self.newBasicPlotWidget)
     #     plot.triggered.connect(self.newRotationWidget)
     #     widget_menu.addAction(plot)

@@ -5,7 +5,7 @@ from PyQt5.QtCore import QTimer
 from src.DataManagement.IO.DataIO import DataIO
 from src.DataManagement.IO.SourceIO import SourceIO
 from src.DataManagement.IO.SetIO import SetIO
-from src.core.SourceSelectionDialog import SourceSelectionDialog
+from src.Ui.SourceSelectionDialog import SourceSelectionDialog
 from PyQt5.QtWidgets import QWidget
 
 
@@ -14,7 +14,7 @@ class Container(QDockWidget):
     def __init__(self, widget: QWidget, update_interval: int = 30, set_id = None):
         super(Container, self).__init__()
 
-        # IO objects
+        # io objects
         self.source_io = SourceIO()
         self.data_io = DataIO()
         self.set_io = SetIO()
