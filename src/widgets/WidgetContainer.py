@@ -2,11 +2,12 @@ import time
 
 from PyQt5.QtWidgets import QDockWidget
 from PyQt5.QtCore import QTimer
-from src.DataManagement.IO.DataIO import DataIO
-from src.DataManagement.IO.SourceIO import SourceIO
-from src.DataManagement.IO.SetIO import SetIO
 from src.Ui.SourceSelectionDialog import SourceSelectionDialog
 from PyQt5.QtWidgets import QWidget
+
+from src.data_management.database.io.DataIO import DataIO
+from src.data_management.database.io.SetIO import SetIO
+from src.data_management.database.io.SourceIO import SourceIO
 
 
 class Container(QDockWidget):

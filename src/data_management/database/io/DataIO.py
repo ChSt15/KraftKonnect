@@ -1,6 +1,6 @@
-from src.DataManagement.Database.Connection import Connection
-from src.DataManagement.DTO.Data import Data
-from src.DataManagement.IO.IOErrors import SqlInsertError, SqlSelectError, SqlDeleteError
+from src.data_management.database.Connection import Connection
+from src.data_management.database.io.IOErrors import SqlInsertError, SqlSelectError, SqlDeleteError
+from src.data_management.dto.Data import Data
 
 
 class DataIO:

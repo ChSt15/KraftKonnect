@@ -7,9 +7,9 @@ from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QListWidget, QTab
     QSplitter, QDialogButtonBox
 from PyQt5.QtCore import Qt, QModelIndex, QObject, QVariant
 
-from src.DataManagement.DTO.Source import Source
-from src.DataManagement.IO.DataIO import DataIO
-from src.DataManagement.IO.SourceIO import SourceIO
+from src.data_management.database.io.DataIO import DataIO
+from src.data_management.database.io.SourceIO import SourceIO
+from src.data_management.dto.Source import Source
 
 
 class SourceManagerDialog(QDialog):
@@ -61,7 +61,7 @@ class SourceManagerDialog(QDialog):
         self.set_up_source_table_view()
 
     def set_up_ui(self):
-        uic.loadUi('res/layout/source_manager_dialog.Ui', self)
+        uic.loadUi('res/layout/source_manager_dialog.ui', self)
         self.buttonBox.button(QDialogButtonBox.Ok).clicked.connect(self.ok)
         self.buttonBox.button(QDialogButtonBox.Discard).clicked.connect(self.discard)
         self.buttonBox.button(QDialogButtonBox.Apply).clicked.connect(self.apply)

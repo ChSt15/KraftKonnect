@@ -1,9 +1,9 @@
 import sqlite3
 from sqlite3 import IntegrityError, Error, OperationalError
 
-from src.DataManagement.Database.Connection import Connection
-from src.DataManagement.DTO.Source import Source
-from src.DataManagement.IO.IOErrors import SqlInsertError, SqlSelectError, SqlDeleteError, SqlUpdateError
+from src.data_management.database.Connection import Connection
+from src.data_management.database.io.IOErrors import SqlSelectError, SqlDeleteError
+from src.data_management.dto.Source import Source
 
 
 class SourceIO:

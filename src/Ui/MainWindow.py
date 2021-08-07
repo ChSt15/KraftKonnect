@@ -23,7 +23,7 @@ class CoreWindow(QMainWindow):
 
     # Layout specific configs
     def set_up_ui(self) -> None:
-        uic.loadUi('res/layout/main_window.Ui', self)
+        uic.loadUi('res/layout/main_window.ui', self)
         self.showMaximized()
         a = self.actionManager.triggered.connect(self.launch_source_manager)
 
