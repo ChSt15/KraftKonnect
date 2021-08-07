@@ -13,3 +13,4 @@ Manage and control various sensors with this modular interface.
     -DB singleton
     -write set data before full data available and write if program is terminated
     -widget time conversion (to eg.seconds, ms, etc -> sync with update interval?)
+    -Dark Theme
