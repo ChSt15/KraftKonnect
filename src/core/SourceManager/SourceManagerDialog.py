@@ -1,4 +1,5 @@
 from dataclasses import asdict, astuple
+from sqlite3 import IntegrityError
 from typing import Any
 
 from PyQt5 import uic, QtCore
@@ -27,9 +28,13 @@ class SourceManagerDialog(QDialog):
         description = self.description_text.toPlainText()
         code = self.code_path.text()
         source = Source(self.selected_source.id, name, description, code)
-        self.source_io.update(source)
-        self.reload_sources()
-        self.clean_widgets()
+        try:
+            self.source_io.update(source)
+            self.reload_sources()
+            self.clean_widgets()
+        except IntegrityError:
+            # TODO Name not unique
+            print('TODO Add warning here!')
 
     def clean_widgets(self):
         self.name_input.setText("")
