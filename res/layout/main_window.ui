@@ -32,7 +32,7 @@
      <height>32</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuWidgets">
+   <widget class="QMenu" name="menu_widgets">
     <property name="title">
      <string>Widgets</string>
     </property>
@@ -44,7 +44,7 @@
     <addaction name="actionAdd"/>
     <addaction name="actionManager"/>
    </widget>
-   <addaction name="menuWidgets"/>
+   <addaction name="menu_widgets"/>
    <addaction name="menuSource"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>

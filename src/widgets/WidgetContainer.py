@@ -12,7 +12,7 @@ from src.data_management.database.io.SourceIO import SourceIO
 
 class Container(QDockWidget):
     # TODO: Replay function -> Use set_id and get historic data
-    def __init__(self, widget: QWidget, update_interval: int = 30, set_id = None):
+    def __init__(self, widget: QWidget, update_interval: int = 30):
         super(Container, self).__init__()
 
         # io objects

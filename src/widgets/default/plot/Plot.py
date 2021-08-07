@@ -4,13 +4,13 @@ from random import random
 from typing import Tuple, List
 
 
-class BasicPlot(PlotWidget):
+class Plot(PlotWidget):
 
     required_sources = ['x-Axis']
     number_of_sources = len(required_sources)
     xi = 0
     def __init__(self):
-        super(BasicPlot, self).__init__()
+        super(Plot, self).__init__()
         self.maxHistory = 30
         self.x = []
         self.y = []

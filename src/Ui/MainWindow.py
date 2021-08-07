@@ -1,10 +1,11 @@
 from PyQt5 import uic
-from PyQt5.QtWidgets import QMainWindow, QWidget
+from PyQt5.QtWidgets import QMainWindow, QWidget, QAction
 from PyQt5.QtCore import Qt
 from src.widgets.WidgetContainer import Container
 from src.Ui.SourceManagerDialog import SourceManagerDialog
-from src.widgets.default.rotation.Rotation import Rotation
-from src.widgets.default.plot.Plot import BasicPlot
+import pkgutil
+import src.widgets.default as widgets
+import importlib
 
 
 class CoreWindow(QMainWindow):
@@ -21,34 +22,24 @@ class CoreWindow(QMainWindow):
         sm = SourceManagerDialog()
         sm.exec_()
 
-    # Layout specific configs
+    # Load ui stuff and configure buttons etc
     def set_up_ui(self) -> None:
         uic.loadUi('res/layout/main_window.ui', self)
         self.showMaximized()
-        a = self.actionManager.triggered.connect(self.launch_source_manager)
-
-    # TODO autmoatically add all widgets from default widgets folder
-    # def load_default_widgets(self):
-    #     widget_menu = self.menu.addMenu('widgets')
-    #     plot = QAction('Basic Plot', self)
-    #     rotation = QAction('rotation', self)
-    #     plot.triggered.connect(self.newBasicPlotWidget)
-    #     plot.triggered.connect(self.newRotationWidget)
-    #     widget_menu.addAction(plot)
-    #     widget_menu.addAction(rotation)
-
-    # # Add new single-x-axis plot from menu bar
-    def newBasicPlotWidget(self) -> None:
-        basicBlot = BasicPlot()
-        self.attach_widget(basicBlot)
-
-    def newRotationWidget(self) -> None:
-        rotationWidget = Rotation()
-        self.attach_widget(rotationWidget)
+        self.actionManager.triggered.connect(self.launch_source_manager)
+        # Load all default widgets to menu
+        for module_finder, name, ispkg in pkgutil.iter_modules(widgets.__path__):
+            module = importlib.import_module(f'.{name}.{name[0].upper()+name[1:]}', 'src.widgets.default')
+            name = name[0].upper()+name[1:]
+            action = QAction(name, self)
+            cls = getattr(module, name)
+            action.triggered.connect(lambda: self.attach_widget(cls))
+            # TODO IMPORTANT: Fix every widget is last widget added :(
+            self.menu_widgets.addAction(action)
 
     # Add widget to screen
-    def attach_widget(self, widget: QWidget) -> None:
-        container = Container(widget)
+    def attach_widget(self, cls) -> None:
+        container = Container(cls())
         self.containers.append(container)
         self.addDockWidget(Qt.BottomDockWidgetArea, container)
 
