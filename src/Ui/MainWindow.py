@@ -33,8 +33,7 @@ class CoreWindow(QMainWindow):
             name = name[0].upper()+name[1:]
             action = QAction(name, self)
             cls = getattr(module, name)
-            action.triggered.connect(lambda: self.attach_widget(cls))
-            # TODO IMPORTANT: Fix every widget is last widget added :(
+            action.triggered.connect(lambda ac, cls=cls: self.attach_widget(cls))
             self.menu_widgets.addAction(action)
 
     # Add widget to screen
@@ -42,6 +41,7 @@ class CoreWindow(QMainWindow):
         container = Container(cls())
         self.containers.append(container)
         self.addDockWidget(Qt.BottomDockWidgetArea, container)
+        pass
 
     def stop_container_updates(self):
         """ Start every registered container """
