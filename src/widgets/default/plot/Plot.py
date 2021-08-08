@@ -1,3 +1,5 @@
+import time
+
 from PyQt5.QtCore import QTimer
 from pyqtgraph import PlotWidget
 from random import random
@@ -13,12 +15,19 @@ class Plot(PlotWidget):
         self.maxHistory = 30
         self.x = []
         self.y = []
+        self.start = int(time.time_ns() / 1000.0 / 1000.0)
         self.plot(x=self.x, y=self.y, clear=True)
 
     # Adds Data-points to plot. data must contain tuples with timestamp (x) and value (y).
     def update_data(self, data):
-        for d in data:
-            self.x.append(d[0])
-            self.y.append(d[1])
+        for i, source in enumerate(data):
+            # i is current source from required_sources
+            if len(source) > 0:
+                for d in source:
+                    self.x.append((d[3]-self.start)/1000.0)
+                    self.y.append(float(d[4]))
+                    if len(self.x) > self.maxHistory:
+                        self.x = self.x[1:]
+                        self.y = self.y[1:]
         self.plot(self.x, self.y, clear=True)
 

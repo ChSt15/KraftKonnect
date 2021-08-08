@@ -26,7 +26,7 @@ class Collector:
                     self.source.id,
                     self.set_id,
                     value,
-                    timestamp if timestamp is not None else int(time_ns() / 1000))
+                    timestamp if timestamp is not None else int(time_ns() / 1000.0 / 1000.0)) # Resolution in ms
         self.data_io.insert(data)
 
     def start(self):

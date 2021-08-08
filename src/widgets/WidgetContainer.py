@@ -20,7 +20,7 @@ class Container(QDockWidget):
         self.data_io = DataIO()
         self.sources = sources
 
-        self.last_update = int(time.time_ns()/1000)
+        self.last_update = int(time.time_ns()/1000.0/1000.0)
         self.timer = QTimer()
         self.widget = widget
 
@@ -32,7 +32,7 @@ class Container(QDockWidget):
 
     # Start widget updates
     def start(self):
-        self.last_update = int(time.time_ns()/1000)
+        self.last_update = int(time.time_ns()/1000.0/1000.0)
         self.timer.setInterval(self.update_interval)
         self.timer.timeout.connect(self.update_widget)
         self.timer.start()
@@ -41,7 +41,7 @@ class Container(QDockWidget):
     def update_widget(self):
         """ Get latest data by source and send to widget"""
         data = [self.data_io.get_all_by_source_after(s.id, self.last_update) for s in self.sources]
-        self.last_update = int(time.time_ns()/1000)
+        self.last_update = int(time.time_ns()/1000.0/1000.0)
         self.widget.update_data(data)
 
     def stop(self):
