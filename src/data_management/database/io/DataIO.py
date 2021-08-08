@@ -7,7 +7,7 @@ class DataIO:
     def __init__(self):
         self.db = Connection('data')
 
-    def write(self, data: Data) -> None:
+    def insert(self, data: Data) -> None:
         cur = self.db.cursor()
         query = 'INSERT INTO data(source_id, set_id, "timestamp", "value") VALUES(?, ?, ?, ?)'
         try:

@@ -1,14 +1,11 @@
-import subprocess
-from src.DataManagement.Database.Connection import Connection
-from src.DataManagement.IO.DataIO import DataIO
-import subprocess
 import importlib
-from threading import Thread
 import multiprocessing
-from src.DataManagement.DTO.Source import Source
-from src.DataManagement.DTO.Data import Data
-from src.DataManagement.IO.SetIO import SetIO
 from time import time_ns
+
+from src.data_management.database.io.DataIO import DataIO
+from src.data_management.database.io.SetIO import SetIO
+from src.data_management.dto.Data import Data
+from src.data_management.dto.Source import Source
 
 
 class Collector:
@@ -19,10 +16,16 @@ class Collector:
         self.data_io = DataIO()
         self.set_io = SetIO()
         self.set_id = None
-        self.process = multiprocessing.Process(target=script.run, args=(self.writeData,))
+        self.process = multiprocessing.Process(target=script.run, args=(self.write_data,))
+        self.start()
 
-    def write_data(self, key: str, value: str, timestamp: int = None):
-        self.data_io.write(self.set_id, key, value, timestamp if timestamp != None else int(time_ns()/1000))
+    def write_data(self, value: str, timestamp: int = None):
+        data = Data(-1,
+                    self.source.id,
+                    self.set_id,
+                    value,
+                    timestamp if timestamp is not None else int(time_ns() / 1000))
+        self.data_io.insert(data)
 
     def start(self):
         self.set_id = self.set_io.get_next_set_id()
