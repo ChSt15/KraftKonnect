@@ -2,7 +2,7 @@ from dataclasses import asdict, astuple
 from sqlite3 import IntegrityError
 from typing import Any
 
-from PyQt5 import uic, QtCore
+from PyQt5 import uic, QtCore, QtGui
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QListWidget, QTableWidget, QPushButton, QLabel, \
     QSplitter, QDialogButtonBox
 from PyQt5.QtCore import Qt, QModelIndex, QObject, QVariant
@@ -57,7 +57,7 @@ class SourceManagerDialog(QDialog):
             self.reload_sources()
 
     def reload_sources(self):
-        self.delete_btn.setEnabled(False)
+        self.delete_button.setEnabled(False)
         self.set_up_source_table_view()
 
     def set_up_ui(self):
@@ -65,6 +65,8 @@ class SourceManagerDialog(QDialog):
         self.buttonBox.button(QDialogButtonBox.Ok).clicked.connect(self.ok)
         self.buttonBox.button(QDialogButtonBox.Discard).clicked.connect(self.discard)
         self.buttonBox.button(QDialogButtonBox.Apply).clicked.connect(self.apply)
+        self.delete_button.setIcon(QtGui.QIcon('res/assets/icons/delete.png'))
+        self.delete_button.setIconSize(QtCore.QSize(24, 24))
 
     def set_up_source_table_view(self):
         self.model = SourceManagerDialog.TableModel([source for source in self.source_io.get_all()])
@@ -77,8 +79,8 @@ class SourceManagerDialog(QDialog):
         self.name_input.setText(self.selected_source.name)
         self.description_text.setText(self.selected_source.description)
         self.code_path.setText(self.selected_source.script)
-        self.delete_btn.setEnabled(True)
-        self.delete_btn.clicked.connect(self.delete)
+        self.delete_button.setEnabled(True)
+        self.delete_button.clicked.connect(self.delete)
 
     class TableModel(QtCore.QAbstractTableModel):
         def __init__(self, data):

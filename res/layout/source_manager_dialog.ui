@@ -60,23 +60,10 @@
            <item>
             <widget class="QLineEdit" name="name_input"/>
            </item>
-           <item>
-            <widget class="QLabel" name="label_2">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>Description:</string>
-             </property>
-            </widget>
-           </item>
           </layout>
          </item>
          <item>
-          <widget class="QPushButton" name="delete_btn">
+          <widget class="QPushButton" name="delete_button">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -87,11 +74,24 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>Delete</string>
+            <string/>
            </property>
           </widget>
          </item>
         </layout>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_2">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Description:</string>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QTextEdit" name="description_text">
