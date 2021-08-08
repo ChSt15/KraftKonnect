@@ -1,17 +1,19 @@
 import time
 
 from PyQt5.QtCore import QTimer
-from pyqtgraph import PlotWidget
+import pyqtgraph
 from random import random
 from typing import Tuple, List
 
 
-class Plot(PlotWidget):
+class Plot(pyqtgraph.PlotWidget):
 
     required_sources = ['y-Axis']
     number_of_sources = len(required_sources)
     def __init__(self):
         super(Plot, self).__init__()
+        # TODO Disable context menu and zoom/pan/etc
+        #pyqtgraph.setConfigOption('leftButtonPan', False)
         self.maxHistory = 30
         self.x = []
         self.y = []
