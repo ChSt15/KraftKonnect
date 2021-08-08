@@ -24,6 +24,8 @@ class SourceManagerDialog(QDialog):
         self.set_up_source_table_view()
 
     def apply(self) -> None:
+        if self.selected_source is None:
+            return
         name = self.name_input.text()
         description = self.description_text.toPlainText()
         code = self.code_path.text()

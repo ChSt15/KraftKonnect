@@ -18,18 +18,15 @@ class Container(QDockWidget):
         # io objects
         self.source_io = SourceIO()
         self.data_io = DataIO()
-        self.set_io = SetIO()
         self.sources = sources
 
-        self.last_update = None
+        self.last_update = int(time.time_ns()/1000)
         self.timer = QTimer()
         self.widget = widget
-        self.next_set_id = self.set_io.get_next_set_id()
-        self.required_sources = self.widget.required_sources
 
         # Load widget and start
         self.setWidget(widget)
-        #self.setFloating(True)
+        self.setFloating(True)
         self.update_interval = update_interval
         self.start()
 
@@ -47,10 +44,5 @@ class Container(QDockWidget):
         self.last_update = int(time.time_ns()/1000)
         self.widget.update_data(data)
 
-    # Set new set id
-    def increment_set_id(self):
-        self.next_set_id = self.latest_record_id + 1
-
     def stop(self):
         self.timer.stop()
-        self.increment_set_id()
