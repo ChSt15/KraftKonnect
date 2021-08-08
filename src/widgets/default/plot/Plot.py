@@ -13,8 +13,9 @@ class Plot(pyqtgraph.PlotWidget):
     def __init__(self):
         super(Plot, self).__init__()
         # TODO Disable context menu and zoom/pan/etc
-        #pyqtgraph.setConfigOption('leftButtonPan', False)
+        pyqtgraph.setConfigOptions(antialias=True)
         self.maxHistory = 30
+        # TODO Use AxisItem for time conversion and display
         self.x = []
         self.y = []
         self.start = int(time.time_ns() / 1000.0 / 1000.0)

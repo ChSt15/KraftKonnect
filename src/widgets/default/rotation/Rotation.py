@@ -16,6 +16,7 @@ class Rotation(FigureCanvasQTAgg):
         self.figure = Figure()
         self.origin = [0, 0, 0]
         # ax = self.figure.add_subplot()
+        # TODO Fix warning
         ax = self.figure.gca(projection='3d')
         ax.set_xlim3d(-1.5, 1.5)
         ax.set_ylim3d(-1.5, 1.5)
