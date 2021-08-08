@@ -37,3 +37,9 @@ class SourceIO:
             self.db.commit()
         except IntegrityError:
             raise
+
+    def insert(self, source):
+        cur = self.db.cursor()
+        query = 'INSERT INTO source(name, description, script)  VALUES(?, ?, ?)'
+        cur.execute(query, (source.name, source.description, source.script))
+        self.db.commit()
