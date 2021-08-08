@@ -49,16 +49,18 @@ class CoreWindow(QMainWindow):
     # Add widget to screen
     def attach_widget(self, cls) -> None:
         widget = cls()
-        source_selection_dialog = SourceSelectionDialog(widget.required_sources)
-        source_selection_dialog.exec_()
-        sources = source_selection_dialog.selected_sources
-        # If source was not added already, create collector
-        for source in sources:
-            if source not in self.sources:
-                self.collectors.append(Collector(source))
-                self.sources.append(source)
-        # TODO Check if btn was cancel/ok instead of source quality
-        # Check if all sources set, else do noting
+        sources = []
+        if widget.required_sources is not None:
+            source_selection_dialog = SourceSelectionDialog(widget.required_sources)
+            source_selection_dialog.exec_()
+            sources = source_selection_dialog.selected_sources
+            # If source was not added already, create collector
+            for source in sources:
+                if source not in self.sources:
+                    self.collectors.append(Collector(source))
+                    self.sources.append(source)
+            # TODO Check if btn was cancel/ok instead of source quality
+            # Check if all sources set, else do noting
         if all(map(lambda x: x != "None" and x is not None, sources)):
             container = Container(cls(), sources)
             self.containers.append(container)
