@@ -12,11 +12,13 @@ class Collector:
 
     def __init__(self, source: Source):
         self.source = source
-        script = importlib.import_module('custom.'+self.source.script)
+        # TODO WARNING: change to custom/default accordingly
+        script = importlib.import_module('scripts.default.'+self.source.script)
         self.data_io = DataIO()
         self.set_io = SetIO()
         self.set_id = None
         self.process = multiprocessing.Process(target=script.run, args=(self.write_data,))
+        # TODO Currently always on
         self.start()
 
     def write_data(self, value: str, timestamp: int = None):

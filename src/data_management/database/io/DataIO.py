@@ -10,11 +10,9 @@ class DataIO:
     def insert(self, data: Data) -> None:
         cur = self.db.cursor()
         query = 'INSERT INTO data(source_id, set_id, "timestamp", "value") VALUES(?, ?, ?, ?)'
-        try:
-            cur.execute(query, data.__repr__())
-            self.db.connection.commit()
-        except Exception:
-            raise SqlInsertError(data, 'data')
+        cur.execute(query, (data.source_id, data.set_id, data.timestamp, data.value))
+        self.db.connection.commit()
+
 
     def get_all_by_source_after(self, source_id: int, timestamp_ms: int) -> list:
         """ Return all values for source after a given timestamp """

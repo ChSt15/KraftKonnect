@@ -4,6 +4,7 @@ from PyQt5.QtCore import Qt
 
 from src.Ui.SourceAddDialog import SourceAddDialog
 from src.Ui.SourceSelectionDialog import SourceSelectionDialog
+from src.data_management.Collector import Collector
 from src.widgets.WidgetContainer import Container
 from src.Ui.SourceManagerDialog import SourceManagerDialog
 import pkgutil
@@ -16,8 +17,9 @@ class CoreWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.set_up_ui()
-        self.sources = []
         self.containers = []
+        self.sources = []
+        self.collectors = []
 
     # Open manager to delete, rename, config origins and sources
     @staticmethod
@@ -50,6 +52,11 @@ class CoreWindow(QMainWindow):
         source_selection_dialog = SourceSelectionDialog(widget.required_sources)
         source_selection_dialog.exec_()
         sources = source_selection_dialog.selected_sources
+        # If source was not added already, create collector
+        for source in sources:
+            if source not in self.sources:
+                self.collectors.append(Collector(source))
+                self.sources.append(source)
         # TODO Check if btn was cancel/ok instead of source quality
         # Check if all sources set, else do noting
         if all(map(lambda x: x != "None" and x is not None, sources)):
