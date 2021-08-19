@@ -8,7 +8,7 @@ matplotlib.use('Qt5Agg')
 
 class Watch(QWidget):
 
-    required_sources = None
+    required_keys = None
 
     def __init__(self):
         super().__init__()

@@ -8,8 +8,8 @@ from typing import Tuple, List
 
 class Plot(pyqtgraph.PlotWidget):
 
-    required_sources = ['y-Axis']
-    number_of_sources = len(required_sources)
+    required_keys = ['y-Axis']
+    number_of_keys = len(required_keys)
     def __init__(self):
         super(Plot, self).__init__()
         # TODO Disable context menu and zoom/pan/etc

@@ -27,3 +27,10 @@ class KeyIO:
         cur.execute(query, (source,))
         result = cur.fetchall()
         return [Key(*key) for key in result]
+
+    def get_all(self):
+        cur = self.db.cursor()
+        query = 'SELECT * FROM key'
+        cur.execute(query)
+        result = cur.fetchall()
+        return [Key(*key) for key in result]

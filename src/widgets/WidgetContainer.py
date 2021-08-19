@@ -2,7 +2,7 @@ import time
 
 from PyQt5.QtWidgets import QDockWidget
 from PyQt5.QtCore import QTimer
-from src.Ui.SourceSelectionDialog import SourceSelectionDialog
+from src.Ui.KeySelectionDialog import KeySelectionDialog
 from PyQt5.QtWidgets import QWidget
 
 from src.data_management.database.io.DataIO import DataIO

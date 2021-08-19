@@ -19,9 +19,12 @@ class SetIO:
     def get_next_set_id(self):
         cur = self.db.cursor()
         query = 'SELECT "id" FROM "set" ORDER BY "id" DESC LIMIT 1'
+        next_id = 0
         try:
             cur.execute(query)
-            res = cur.fetchone()
-            return res[0]+1
+            result = cur.fetchone()
+            if result is not None:
+                next_id = result[0]+1
         except:
-            raise SqlSelectError('set', 'get_next_set_id')
+            print('Error next set id')
+        return next_id
