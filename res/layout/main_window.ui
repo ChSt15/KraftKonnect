@@ -44,8 +44,16 @@
     <addaction name="add_source"/>
     <addaction name="actionManager"/>
    </widget>
+   <widget class="QMenu" name="menu_set">
+    <property name="title">
+     <string>Set</string>
+    </property>
+    <addaction name="action_start"/>
+    <addaction name="action_stop"/>
+   </widget>
    <addaction name="menu_widgets"/>
    <addaction name="menuSource"/>
+   <addaction name="menu_set"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionManager">
@@ -56,6 +64,16 @@
   <action name="add_source">
    <property name="text">
     <string>Add</string>
+   </property>
+  </action>
+  <action name="action_start">
+   <property name="text">
+    <string>Start</string>
+   </property>
+  </action>
+  <action name="action_stop">
+   <property name="text">
+    <string>Stop</string>
    </property>
   </action>
  </widget>
