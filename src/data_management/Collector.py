@@ -1,5 +1,6 @@
 import importlib
 import multiprocessing
+import time
 from time import time_ns
 
 from src.data_management.database.io.DataIO import DataIO
@@ -21,9 +22,14 @@ class Collector:
         # TODO Currently always on
         self.start()
 
-    def write_data(self, value: str, timestamp: int = None):
-        data = Data(-1,
-                    self.source.id,
+    def write_data(self, dictionary):
+        try:
+            timestamp = dictionary['timestamp']
+        except:
+            timestamp = time.time_ns()
+        for key in dictionary:
+            print(key)
+        data = Data(self.source.id,
                     self.set_id,
                     value,
                     timestamp if timestamp is not None else int(time_ns() / 1000.0 / 1000.0)) # Resolution in ms
