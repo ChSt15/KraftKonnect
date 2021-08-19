@@ -1,11 +1,9 @@
 import matplotlib
-import numpy as np
-from matplotlib.animation import TimedAnimation, FuncAnimation
 from scipy.spatial.transform import Rotation as R
-
-matplotlib.use('Qt5Agg')
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
 from matplotlib.figure import Figure
+
+matplotlib.use('Qt5Agg')
 
 
 class Rotation(FigureCanvasQTAgg):
@@ -24,7 +22,8 @@ class Rotation(FigureCanvasQTAgg):
         self.roll = [1, 0, 0]
         self.pitch = [0, 1, 0]
         self.yaw = [0, 0, 1]
-        self.quiver = ax.quiver(self.origin, self.origin, self.origin, self.roll, self.pitch, self.yaw, colors=['r', 'g', 'b'], linewidths=3)
+        self.quiver = ax.quiver(self.origin, self.origin, self.origin, self.roll, self.pitch, self.yaw,
+                                colors=['r', 'g', 'b'], linewidths=3)
         super(Rotation, self).__init__(self.figure)
 
     def update_data(self, data):
