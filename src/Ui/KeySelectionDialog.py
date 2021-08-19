@@ -1,15 +1,17 @@
 from PyQt5 import uic
 from PyQt5.QtWidgets import QDialog, QHBoxLayout, QLabel, QComboBox, QDialogButtonBox, QWidget
 
+from src.data_management.database.io.KeyIO import KeyIO
 from src.data_management.database.io.SourceIO import SourceIO
 
 
 class KeySelectionDialog(QDialog):
     def __init__(self, required_keys):
         super(KeySelectionDialog, self).__init__()
-        self.available_keys = SourceIO().get_all()
+        self.available_keys = KeyIO().get_all()
         self.required_keys = required_keys
         self.selected_keys = [None for _ in required_keys]
+        self.sources = {source.id: source.name for source in SourceIO().get_all()}
         self.set_up_ui()
 
     def set_up_ui(self):
@@ -36,7 +38,7 @@ class KeySelectionDialog(QDialog):
         label = QLabel(source)
         combo_box = QComboBox()
         # TODO Remove Empty ("") after first selection
-        combo_box.addItems(["None"] + [s.__repr__() for s in self.available_keys])
+        combo_box.addItems(["None"] + [f'{self.sources[key.source]}: {key.name}' for key in self.available_keys])
         combo_box.currentIndexChanged.connect(lambda i: self.set_key(i - 1, index))
         layout.addWidget(label)
         layout.addWidget(combo_box)

@@ -9,27 +9,27 @@ class DataIO:
 
     def insert(self, data: Data) -> None:
         cur = self.db.cursor()
-        query = 'INSERT INTO data(source_id, set_id, "timestamp", "value") VALUES(?, ?, ?, ?)'
-        cur.execute(query, (data.source_id, data.set_id, data.timestamp, data.value))
+        query = 'INSERT INTO data(key, "time", "value") VALUES(?, ?, ?, ?)'
+        cur.execute(query, (data.key, data.time, data.value))
         self.db.connection.commit()
 
 
-    def get_all_by_source_after(self, source_id: int, timestamp_ms: int) -> list:
+    def get_all_by_key_after(self, key: int, time: int) -> list:
         """ Return all values for source after a given timestamp """
         cur = self.db.cursor()
-        query = 'SELECT * FROM "data" WHERE source_id = ? AND "timestamp" > ? ORDER BY timestamp DESC'
+        query = 'SELECT * FROM "data" WHERE key = ? AND "time" > ? ORDER BY time DESC'
         try:
-            cur.execute(query, (source_id, timestamp_ms))
+            cur.execute(query, (key, time))
             result = cur.fetchall()
             return result
         except Exception:
-            raise SqlSelectError('data', 'get_all_by_source_after', f'{source_id=}, {timestamp_ms=}')
+            raise SqlSelectError('data', 'get_all_by_source_after', f'{key=}, {time=}')
 
-    def delete_all(self, source: int):
+    def delete_all_by_key(self, key: int):
         cur = self.db.cursor()
-        query = 'DELETE FROM "data" WHERE "source_id" = ?'
+        query = 'DELETE FROM "data" WHERE "key" = ?'
         try:
-            cur.execute(query, (source,))
+            cur.execute(query, (key,))
             self.db.commit()
         except Exception:
             raise SqlDeleteError('data', 'delete_all')

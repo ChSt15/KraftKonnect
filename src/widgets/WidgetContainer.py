@@ -12,14 +12,13 @@ from src.data_management.database.io.SourceIO import SourceIO
 
 class Container(QDockWidget):
     # TODO: Replay function -> Use set_id and get historic data
-    def __init__(self, widget: QWidget, sources, update_interval: int = 30):
+    def __init__(self, widget: QWidget, keys, update_interval: int = 30):
         super(Container, self).__init__()
 
         # io objects
         self.source_io = SourceIO()
         self.data_io = DataIO()
-        self.sources = sources
-
+        self.keys = keys
         self.last_update = int(time.time_ns()/1000.0/1000.0)
         self.timer = QTimer()
         self.widget = widget
@@ -39,8 +38,7 @@ class Container(QDockWidget):
 
     # Update widget with all new data
     def update_widget(self):
-        """ Get latest data by source and send to widget"""
-        data = [self.data_io.get_all_by_source_after(s.id, self.last_update) for s in self.sources]
+        data = [self.data_io.get_all_by_key_after(key.id, self.last_update) for key in self.keys]
         self.last_update = int(time.time_ns()/1000.0/1000.0)
         self.widget.update_data(data)
 

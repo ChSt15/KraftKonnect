@@ -27,7 +27,7 @@ class Rotation(FigureCanvasQTAgg):
         super(Rotation, self).__init__(self.figure)
 
     def update_data(self, data):
-        rotation_matrix = R.from_euler('xyz', data[-1], degrees=True).as_matrix()
+        rotation_matrix = R.from_euler('xyz', (10, 10, 10), degrees=True).as_matrix()
         self.roll = rotation_matrix @ [1, 0, 0]
         self.pitch = rotation_matrix @ [0, 1, 0]
         self.yaw = rotation_matrix @ [0, 0, 1]
