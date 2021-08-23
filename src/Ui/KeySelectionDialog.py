@@ -24,8 +24,6 @@ class KeySelectionDialog(QDialog):
             self.selection_layout.addLayout(selection_layout)
 
     def ok(self):
-        # TODO Add Hint that says something like "U have to specify more sources."
-        print('ssd-ok')
         if all(map(lambda x: x != "None" and x is not None, self.selected_keys)):
             self.accept()
 

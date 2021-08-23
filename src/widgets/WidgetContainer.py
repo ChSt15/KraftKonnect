@@ -36,7 +36,7 @@ class Container(QDockWidget):
 
     # Update widget with all new data
     def update_widget(self):
-        self.widget.update_data([])
+        self.widget.update_data([[()]])
         self.widget.redraw()
         # data = [self.data_io.get_all_by_key_after(key.id, self.last_update) for key in self.keys]
         # self.widget.update_data(data)

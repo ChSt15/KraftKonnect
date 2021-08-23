@@ -13,8 +13,7 @@ class Rotation(FigureCanvasQTAgg):
     def __init__(self):
         self.figure = Figure()
         self.origin = [0, 0, 0]
-        # TODO Fix warning
-        ax = self.figure.gca(projection='3d')
+        ax = self.figure.add_subplot(projection='3d')
         ax.set_xlim3d(-1, 1)
         ax.set_ylim3d(-1, 1)
         ax.set_zlim3d(-1, 1)
@@ -29,13 +28,17 @@ class Rotation(FigureCanvasQTAgg):
         super(Rotation, self).__init__(self.figure)
 
     def update_data(self, data):
-        rotation_matrix = R.from_euler('xyz', (10, -5, 6), degrees=True).as_matrix()
-        self.roll = rotation_matrix @ self.roll #[1, 0, 0]
-        self.pitch = rotation_matrix @ self.pitch # [0, 1, 0]
-        self.yaw = rotation_matrix @ self.yaw#[0, 0, 1]
+        if data[-1][0] != ():
+            rotation_matrix = self.get_rotation_matrix(data[-1][0])
+            self.roll = rotation_matrix @ [1, 0, 0]
+            self.pitch = rotation_matrix @ [0, 1, 0]
+            self.yaw = rotation_matrix @ [0, 0, 1]
 
     def redraw(self):
         self.quiver.set_segments([[self.origin, self.roll],
                                   [self.origin, self.pitch],
                                   [self.origin, self.yaw]])
         self.figure.canvas.draw()
+
+    def get_rotation_matrix(self, quaternion):
+        return R.from_quat(quaternion).as_matrix()
