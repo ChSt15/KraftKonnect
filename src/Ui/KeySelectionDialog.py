@@ -10,8 +10,7 @@ class KeySelectionDialog(QDialog):
         super(KeySelectionDialog, self).__init__()
         self.available_keys = KeyIO().get_all()
         self.required_keys = required_keys
-        self.selected_keys = [None for _ in required_keys]
-        self.sources = {source.id: source.name for source in SourceIO().get_all()}
+        self.selected_keys = [None for _ in range(len(required_keys))]
         self.set_up_ui()
 
     def set_up_ui(self):
@@ -20,8 +19,8 @@ class KeySelectionDialog(QDialog):
         self.buttonBox.button(QDialogButtonBox.Ok).clicked.connect(self.ok)
         self.buttonBox.button(QDialogButtonBox.Cancel).clicked.connect(self.cancel)
         # Add selection
-        for i, source in enumerate(self.required_keys):
-            selection_layout = self.key_selector_layout(i, source)
+        for i, (name, dimension) in enumerate(self.required_keys):
+            selection_layout = self.key_selector_layout(i, name, dimension)
             self.selection_layout.addLayout(selection_layout)
 
     def ok(self):
@@ -33,12 +32,13 @@ class KeySelectionDialog(QDialog):
     def cancel(self):
         self.close()
 
-    def key_selector_layout(self, index, source) -> QWidget:
+    def key_selector_layout(self, index, name, dimension) -> QWidget:
         layout = QHBoxLayout()
-        label = QLabel(source)
+        label = QLabel(name)
         combo_box = QComboBox()
         # TODO Remove Empty ("") after first selection
-        combo_box.addItems(["None"] + [f'{self.sources[key.source]}: {key.name}' for key in self.available_keys])
+        keys_with_dimension = [key for key in self.available_keys if key.dimension == dimension]
+        combo_box.addItems(["None"] + [f'{key.source}: {key.name}' for key in keys_with_dimension])
         combo_box.currentIndexChanged.connect(lambda i: self.set_key(i - 1, index))
         layout.addWidget(label)
         layout.addWidget(combo_box)

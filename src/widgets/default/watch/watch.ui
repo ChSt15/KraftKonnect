@@ -63,6 +63,9 @@
        <property name="scaledContents">
         <bool>false</bool>
        </property>
+       <property name="alignment">
+        <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+       </property>
       </widget>
      </item>
     </layout>

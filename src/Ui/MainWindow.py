@@ -60,10 +60,11 @@ class CoreWindow(QMainWindow):
 
     # Add widget to screen
     def attach_widget(self, cls) -> None:
-        widget = cls()
         keys = []
-        if widget.required_keys is not None:
-            key_selection_dialog = KeySelectionDialog(widget.required_keys)
+        widget = cls()
+        required_keys = widget.required_keys
+        if len(required_keys) != 0:
+            key_selection_dialog = KeySelectionDialog(required_keys)
             key_selection_dialog.exec_()
             # map(self.register_source, sources)
             keys = key_selection_dialog.selected_keys

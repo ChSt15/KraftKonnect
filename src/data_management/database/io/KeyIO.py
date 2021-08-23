@@ -34,3 +34,10 @@ class KeyIO:
         cur.execute(query)
         result = cur.fetchall()
         return [Key(*key) for key in result]
+
+    def get_all_by_dimension(self, dimension: int):
+        cur = self.db.cursor()
+        query = 'SELECT * FROM key WHERE dimension >= ?'
+        cur.execute(query, (dimension,))
+        result = cur.fetchall()
+        return [Key(*key) for key in result]

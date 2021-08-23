@@ -7,9 +7,8 @@ matplotlib.use('Qt5Agg')
 
 
 class Rotation(FigureCanvasQTAgg):
-    required_keys = ['Roll', 'Pitch', 'Yaw']
-    number_of_keys = len(required_keys)
-    update_interval = 100  # ms
+    required_keys = [('Quaternion', 4)]
+    update_interval = 30  # ms
 
     def __init__(self):
         self.figure = Figure()
