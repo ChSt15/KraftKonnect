@@ -10,8 +10,8 @@ class KeyIO:
 
     def insert(self, key: Key):
         cur = self.db.cursor()
-        query = 'INSERT INTO key(name, source) VALUES(?, ?)'
-        cur.execute(query, (key.name, key.source))
+        query = 'INSERT INTO key(name, source, dimension) VALUES(?, ?, ?)'
+        cur.execute(query, (key.name, key.source, key.dimension))
         self.db.connection.commit()
 
     def get_by_id(self, id: int) -> Key:
@@ -37,7 +37,7 @@ class KeyIO:
 
     def get_all_by_dimension(self, dimension: int):
         cur = self.db.cursor()
-        query = 'SELECT * FROM key WHERE dimension >= ?'
+        query = 'SELECT * FROM key WHERE dimension = ?'
         cur.execute(query, (dimension,))
         result = cur.fetchall()
         return [Key(*key) for key in result]

@@ -15,7 +15,7 @@ class Collector:
     def __init__(self, source: Source):
         self.source = source
         # TODO WARNING: change to custom/default accordingly
-        script = importlib.import_module('scripts.default.'+self.source.script)
+        script = importlib.import_module('scripts.default.'+self.source.script.rsplit('/')[0])
         self.key_io = KeyIO()
         self.data_io = DataIO()
         self.set_io = SetIO()
@@ -27,7 +27,7 @@ class Collector:
 
     def write_data(self, dictionary):
         try:
-            time = dictionary['time']
+            time = dictionary['Time']
         except:
             time = time_ns()
         for key, value in dictionary:

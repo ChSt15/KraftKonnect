@@ -8,6 +8,7 @@ from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QListWidget, QTab
 from PyQt5.QtCore import Qt, QModelIndex, QObject, QVariant
 
 from src.data_management.database.io.DataIO import DataIO
+from src.data_management.database.io.KeyIO import KeyIO
 from src.data_management.database.io.SourceIO import SourceIO
 from src.data_management.dto.Source import Source
 
@@ -54,7 +55,9 @@ class SourceManagerDialog(QDialog):
         if self.selected_source is not None:
             id = self.selected_source.id
             self.source_io.delete(id)
-            self.data_io.delete_all(id)
+            keys = KeyIO().get_all_by_source(id)
+            for key in keys:
+                self.data_io.delete_all_by_key(key.id)
             self.selected_source = None
             self.reload_sources()
 

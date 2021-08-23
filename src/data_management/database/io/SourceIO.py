@@ -43,3 +43,9 @@ class SourceIO:
         query = 'INSERT INTO source(name, description, script)  VALUES(?, ?, ?)'
         cur.execute(query, (source.name, source.description, source.script))
         self.db.commit()
+
+    def get_last_id(self):
+        cur = self.db.cursor()
+        query = 'SELECT id FROM source ORDER BY id ASC LIMIT 1'
+        cur.execute(query)
+        return cur.fetchone()[0]
