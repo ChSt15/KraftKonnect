@@ -1,16 +1,15 @@
-from dataclasses import asdict, astuple
+from dataclasses import astuple
 from sqlite3 import IntegrityError
 from typing import Any
 
 from PyQt5 import uic, QtCore, QtGui
-from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QListWidget, QTableWidget, QPushButton, QLabel, \
-    QSplitter, QDialogButtonBox
-from PyQt5.QtCore import Qt, QModelIndex, QObject, QVariant
+from PyQt5.QtWidgets import QDialog, QDialogButtonBox
+from PyQt5.QtCore import Qt, QModelIndex, QVariant
 
 from src.data_management.database.io.DataIO import DataIO
 from src.data_management.database.io.KeyIO import KeyIO
 from src.data_management.database.io.SourceIO import SourceIO
-from src.data_management.dto.Source import Source
+from src.data_management.database.Source import Source
 
 
 class SourceManagerDialog(QDialog):

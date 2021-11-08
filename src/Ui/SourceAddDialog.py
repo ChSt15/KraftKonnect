@@ -5,8 +5,8 @@ from PyQt5.QtWidgets import QDialogButtonBox, QDialog, QFileDialog
 
 from src.data_management.database.io.KeyIO import KeyIO
 from src.data_management.database.io.SourceIO import SourceIO
-from src.data_management.dto.Key import Key
-from src.data_management.dto.Source import Source
+from src.data_management.database.Key import Key
+from src.data_management.database.Source import Source
 
 
 class SourceAddDialog(QDialog):
@@ -36,6 +36,7 @@ class SourceAddDialog(QDialog):
             self.path.setText(file_path[0].path())
 
     def ok(self):
+        # TODO REMOVE TEST CODE
         script = importlib.import_module('scripts.default.' + 'Random.Random')#self.path.text().split('/')[-2])
         keys = script.provides
         key_io = KeyIO()

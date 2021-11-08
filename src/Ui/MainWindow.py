@@ -1,18 +1,18 @@
 import time
 
 from PyQt5 import uic
-from PyQt5.QtWidgets import QMainWindow, QWidget, QAction
+from PyQt5.QtWidgets import QMainWindow, QAction
 from PyQt5.QtCore import Qt
 
 from src.Ui.SourceAddDialog import SourceAddDialog
 from src.Ui.KeySelectionDialog import KeySelectionDialog
 from src.data_management.Collector import Collector
 from src.data_management.database.io.SetIO import SetIO
-from src.data_management.dto.Key import Key
-from src.data_management.dto.Source import Source
+from src.data_management.database.Key import Key
+from src.data_management.database.Source import Source
 from src.widgets.WidgetContainer import Container
 from src.Ui.SourceManagerDialog import SourceManagerDialog
-from src.data_management.dto.Set import Set
+from src.data_management.database.Set import Set
 from src.data_management.database.io.KeyInSetIO import KeyInSetIO
 import pkgutil
 import src.widgets.default as widgets

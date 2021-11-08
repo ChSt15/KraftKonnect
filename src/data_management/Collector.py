@@ -1,13 +1,12 @@
 import importlib
 import multiprocessing
-import time
 from time import time_ns
 
 from src.data_management.database.io.DataIO import DataIO
 from src.data_management.database.io.KeyIO import KeyIO
 from src.data_management.database.io.SetIO import SetIO
-from src.data_management.dto.Data import Data
-from src.data_management.dto.Source import Source
+from src.data_management.database.Data import Data
+from src.data_management.database.Source import Source
 
 
 class Collector:
