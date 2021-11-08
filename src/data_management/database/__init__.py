@@ -8,7 +8,7 @@ Session = sessionmaker(engine)
 
 # Load classes
 import src.data_management.database.Data
-import src.data_management.database.Key
+import src.data_management.database.SourceSet
 import src.data_management.database.Set
 import src.data_management.database.Source
 # Build tables

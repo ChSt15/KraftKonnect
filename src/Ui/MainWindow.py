@@ -6,7 +6,7 @@ from PyQt5.QtCore import Qt
 
 from src.Ui.SourceAddDialog import SourceAddDialog
 from src.Ui.KeySelectionDialog import KeySelectionDialog
-from src.data_management.Collector import Collector
+from src.data_management.SourceLoader import Collector
 from src.data_management.database.io.SetIO import SetIO
 from src.data_management.database.Key import Key
 from src.data_management.database.Source import Source
